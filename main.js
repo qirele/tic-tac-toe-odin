@@ -43,10 +43,27 @@ const Gameflow = (player1, player2) => {
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
   };
 
+  const checkWinner = () => {
+    // arr[0] === arr[1] && arr[1] == arr[2];
+    const board = Gameboard.getBoard();
+    for (let i = 0; i < board.length; i++) {
+      let arr = [board[i][0], board[i][0], board[i][0]];
+      if (arr[0] === arr[1] && arr[1] == arr[2]) {
+        if (arr[0] === "") continue;
+        if (activePlayer.marker !== arr[0]) { switchPlayerTurn() }
+        return `Winner is ${activePlayer.marker}`;
+      }
+    }
+    return "";
+  };
+
   const getActivePlayer = () => activePlayer;
 
   const playRound = (row, column) => {
     Gameboard.placeMarker(row, column, activePlayer.marker);
+
+    console.log(checkWinner());
+
     switchPlayerTurn();
   };
 
@@ -78,9 +95,16 @@ const DisplayController = (() => {
   };
 
   const handleClick = (e) => {
-    game.playRound(e.target.dataset.row, e.target.dataset.col);
+    const row = e.target.dataset.row;
+    const col = e.target.dataset.col;
+
+    if (!row || !col) return;
+    if (Gameboard.getBoard()[row][col] !== "") return;
+
+    game.playRound(row, col);
     updateScreen();
   };
+
   boardDiv.addEventListener("click", handleClick);
 
   updateScreen();
