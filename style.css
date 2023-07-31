@@ -21,20 +21,23 @@ body {
   display: grid;
   grid-template-columns: repeat(3, minmax(0px, 1fr));
   grid-template-columns: repeat(3, minmax(0px, 1fr));
-  gap: 10px;
 }
 
 .cell {
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 5px 20px 0px #000000;
   user-select: none;
   cursor: pointer;
   transition: all 0.2s;
+  box-shadow: 0px 2px 10px 0px #000000;
+  background-color: rgb(13, 27, 27);
 }
 
 .cell:hover, .cell:active {
-  transform: translateY(-2px);
+  transform: translateY(-5px) scale(1.05);
+  z-index: 2;
+  overflow: hidden;
   box-shadow: 0px 10px 20px 10px #000000;
+  background-color: rgb(17, 34, 34);
 }
