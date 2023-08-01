@@ -12,7 +12,8 @@ html {
 body {
   min-height: 100vh;
   display: grid;
-  place-items: center;
+  grid-template-rows: repeat(3, minmax(10px, 1fr));
+  justify-content: center;
 }
 
 .board {
@@ -40,4 +41,12 @@ body {
   overflow: hidden;
   box-shadow: 0px 10px 20px 10px #000000;
   background-color: rgb(17, 34, 34);
+}
+
+.status {
+  align-self: self-end;
+}
+
+.restart {
+  align-self: self-start;
 }
