@@ -26,6 +26,8 @@ const Player = (name, marker) => {
 };
 
 const Gameflow = (player1, player2) => {
+  let moveNumber = 0;
+
   const players = [
     {
       name: player1.getName(),
@@ -44,22 +46,47 @@ const Gameflow = (player1, player2) => {
   };
 
   const checkWinner = () => {
-    // arr[0] === arr[1] && arr[1] == arr[2];
     const board = Gameboard.getBoard();
     for (let i = 0; i < board.length; i++) {
-      let arr = [board[i][0], board[i][0], board[i][0]];
+
+      // three in a row
+      let arr = [board[i][0], board[i][1], board[i][2]];
       if (arr[0] === arr[1] && arr[1] == arr[2]) {
         if (arr[0] === "") continue;
         if (activePlayer.marker !== arr[0]) { switchPlayerTurn() }
-        return `Winner is ${activePlayer.marker}`;
+        return `Winner is ${activePlayer.marker} row=${i}`;
+      }
+
+      // three in a column
+      arr = [board[0][i], board[1][i], board[2][i]];
+      if (arr[0] === arr[1] && arr[1] == arr[2]) {
+        if (arr[0] === "") continue;
+        if (activePlayer.marker !== arr[0]) { switchPlayerTurn() }
+        return `Winner is ${activePlayer.marker} col=${i}`;
       }
     }
+
+    // three in diagonal
+    if (board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
+      if (board[0][0] === "") return "";
+      if (activePlayer.marker !== board[0][0]) { switchPlayerTurn() }
+      return `Winner is ${activePlayer.marker} ${[[0, 0], [1, 1], [2, 2]]}`;
+    }
+    if (board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
+      if (board[0][2] === "") return "";
+      if (activePlayer.marker !== board[0][2]) { switchPlayerTurn() }
+      return `Winner is ${activePlayer.marker} ${[[0, 2], [1, 1], [2, 0]]}`;
+    }
+
+    if (moveNumber === 9) return "tie";
+
     return "";
   };
 
   const getActivePlayer = () => activePlayer;
 
   const playRound = (row, column) => {
+    moveNumber++;
     Gameboard.placeMarker(row, column, activePlayer.marker);
 
     console.log(checkWinner());
