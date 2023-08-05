@@ -13,7 +13,7 @@ const Gameboard = (() => {
       for (let j = 0; j < board[i].length; j++) {
         board[i][j] = "";
       }
-    }
+   }
   }
   const getBoard = () => board;
 
@@ -118,7 +118,7 @@ const Gameflow = (player1, player2) => {
     gameFinished = false;
     activePlayer = players[0];
     Gameboard.resetBoard();
-    if (player1Name !== "" && player2Name !== "") {
+    if (player1Name && player2Name) {
       players[0].name = player1Name;
       players[1].name = player2Name;
     }
